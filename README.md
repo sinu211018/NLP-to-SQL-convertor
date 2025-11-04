@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+NLP to SQL System
+A powerful natural language to SQL conversion system with multi-user support, workspace management, and persistent conversation history.
 
-## Getting Started
+Overview
+This system allows users to interact with databases using natural language. It converts natural language questions into SQL queries, executes them, and returns the results along with natural language explanations. The system supports multiple users, each with their own workspaces connected to different databases, and maintains conversation history for context-aware responses.
 
-First, run the development server:
+Features
+Natural Language to SQL: Convert natural language questions into SQL queries
+Multi-user Authentication: JWT-based authentication system
+Workspace Management: Each user can create multiple workspaces connected to different databases
+Session Management: Each workspace can have multiple chat sessions (conversations)
+Persistent Context: Conversation history is stored in a vector database for context-aware responses
+Pagination: Large result sets are paginated for better performance
+MongoDB Integration: User data, workspaces, and sessions are stored in MongoDB
+Vector Database: Conversation context is stored in a vector database for semantic search
+Intelligent Query Analysis:
+Handles conversational queries without SQL
+Detects and processes "why" questions with causal analysis
+Supports multi-query analysis for complex questions
+Handles pagination for large result sets
+Architecture
+The system consists of two main components:
 
-```bash
+Backend API: A FastAPI application that handles:
+
+User authentication
+Workspace and session management
+Natural language to SQL conversion
+Database querying
+Context management
+Frontend Application: A Next.js application that provides:
+
+User registration and login
+Workspace and session management
+Chat interface for natural language queries
+SQL and results display
+Pagination for large result sets
+Setup
+Prerequisites
+Python 3.8+
+MongoDB 4.4+
+PostgreSQL (for the target databases)
+Node.js 16+ (for frontend)
+Backend Setup
+Clone the repository
+Install dependencies:
+pip install -r requirements.txt
+Create a .env file with the required environment variables (see BACKEND_README.md)
+Start the server:
+uvicorn api:app --reload
+For more details, see BACKEND_README.md.
+
+Frontend Setup
+Navigate to the frontend directory:
+cd nlp-sql-chatbot
+Install dependencies:
+npm install
+Create a .env.local file with the required environment variables (see FRONTEND_README.md)
+Start the development server:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+For more details, see FRONTEND_README.md.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Usage
+Register a new user account
+Create a workspace connected to your database
+Create a session within the workspace
+Start asking questions in natural language
+View the generated SQL, results, and explanations
+API Documentation
+The API documentation is available at /docs when the backend server is running.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Security Considerations
+Database passwords are stored in MongoDB. In a production environment, consider encrypting these passwords.
+JWT tokens have a 24-hour expiration by default. Adjust this as needed for your security requirements.
+The API uses CORS with "*" as the allowed origin. In production, specify your frontend domains.
